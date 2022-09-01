@@ -1,0 +1,24 @@
+{% if current_user.is_authenticated %}
+{% extends "admin/admin_layout.html" %}
+
+{% block body %}
+    {% include "admin/expenses_table.html" %}
+    
+    <script>
+        var cur_url = window.location.href.split("/");
+        if(cur_url.at(-2) == "admin"){
+            var dash = document.querySelector(".dash");
+            dash.classList.add("router-link-active")
+        }
+    </script>
+
+{% endblock body %}
+
+
+
+
+<!-- When user is not authorized -->
+{% else %}
+<h1>You are not authorized for visiting this page.</h1>
+{% endif %}
+

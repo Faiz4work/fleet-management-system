@@ -1,0 +1,98 @@
+{% extends "admin/admin_layout.html" %} {% block body %}
+
+<style>
+  .count1 {
+    display: flex;
+    justify-content: space-between;
+  }
+  .count1>a{
+    box-shadow: 1px 0px 5px #00174c;
+    border-radius: 5px;
+    padding: 8px;
+    color: #00174c;
+  }
+
+  .driver_id_image{
+    width: 50px;
+    height: 50px;
+  }
+</style>
+
+<div class="main">
+  <div class="card">
+    <div class="card-body">
+      <div class="count1">
+        <h2>drivers page</h2>
+        <a href="{{ url_for('Admin_DriverVehicle.add_driver') }}">Add a Driver</a>
+      </div>
+
+      <div class="drtable">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Drivers Names</th>
+              <th>Email</th>
+              <th>Joining Date (Y-M-D)</th>
+              <th>Driver id</th>
+              <th>Cell no</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for driver in drivers %}
+            <tr>
+              <td>{{ driver.username }}</td>
+              <td>{{ driver.email }}</td>
+              <td>{{ driver.joining_date.strftime("%Y-%m-%d") }}</td>
+
+              <td>
+                <a href="../../{{ driver.id_no_image }}" target="_blank">
+                  <img class="driver_id_image"
+                    src="../../{{ driver.id_no_image }}"
+                    alt="driver id image"
+                    id="driver_id"
+                /></a>
+              </td>
+
+              <td>{{ driver.cell_no }}</td>
+
+              <td>
+                <a href="{{ url_for('Admin_DriverVehicle.edit_driver', driver_id=driver.id) }}" class="btn btn-info">Edit</a>
+
+                <!-- delete model starts from here -->
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#{{driver.email.split('@')[0]}}">
+                  Delete
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="{{driver.email.split('@')[0]}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure to delete this user? 
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <a class="btn btn-primary" href="{{ url_for('Admin_DriverVehicle.delete_driver', driver_id=driver.id) }}">Confirm</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- delete modal ends here -->
+
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock body %}

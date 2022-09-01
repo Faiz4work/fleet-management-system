@@ -1,0 +1,6 @@
+1) Complete vehicle addition form with driver attachment.
+2) remove 'settings' icon from profile dropdown.
+3) add fleet card order form in driver page.
+4) add profile page 
+5) upload project to pythonanywhere.com
+6) add a new repository on git and local machine.
